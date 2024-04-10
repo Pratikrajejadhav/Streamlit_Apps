@@ -8,7 +8,7 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 st.set_option('deprecation.showPyplotGlobalUse', False)
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import confusion_matrix, roc_curve, auc 
+from sklearn.metrics import confusion_matrix, roc_curve, auc, accuracy_score 
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
@@ -38,9 +38,9 @@ def plot_roc_curve(y_true, y_pred_prob):
 
 # Streamlit UI
 st.title('Classification Model Evaluation')
-
+st.subheader("Upload A Preprocessed And Standardize Data file")
 # File uploader
-uploaded_file = st.file_uploader("Upload A Preprocessed And Standardize Data file", type=["csv"])
+uploaded_file = st.file_uploader("Upload Data file", type=["csv"])
 
 if uploaded_file is not None:
     # Read data
@@ -50,10 +50,10 @@ if uploaded_file is not None:
     st.write(df)
 
     # Select target column
-    target_column = st.selectbox("Select target column", df.columns)
+    target_column = st.sidebar.selectbox("Select target column", df.columns)
 
     # Select algorithm
-    algorithm = st.selectbox("Select classification algorithm", ["KNN", "Naive Bayes", "Decision Tree","Logistic Regression"])
+    algorithm = st.sidebar.selectbox("Select classification algorithm", ["KNN", "Naive Bayes", "Decision Tree","Logistic Regression"])
 
     # Prepare data
     X = df.drop(columns=[target_column])
@@ -78,3 +78,8 @@ if uploaded_file is not None:
     # Evaluate
     plot_confusion_matrix(y_test, y_pred)
     plot_roc_curve(y_test, y_pred_prob)
+    
+    # Accuracy 
+    accuracy = accuracy_score(y_test, y_pred)
+
+    st.markdown(f"### **Accuracy Score : {accuracy}**")
