@@ -11,16 +11,16 @@ from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 
-st.title('Random Forest Hyperparameter Tuning and Evaluation')
+st.title('**Random Forest Hyperparameter Tuning and Evaluation**')
 
 #upload a file
-file_upload = st.sidebar.file_uploader("Upload csv file",type=['csv'])
+file_upload = st.sidebar.file_uploader("**Upload Only Preprocessed CSV File**",type=['csv'])
 
 if file_upload is not None:
     data = pd.read_csv(file_upload)
 
     # select target column
-    target_column = st.selectbox("**Select The Target Column**",options=data.columns)
+    target_column = st.selectbox("**Select The Target Column First**",options=data.columns)
 
     # input output column
     X = data.drop(columns=[target_column])
@@ -28,12 +28,12 @@ if file_upload is not None:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
     # Random Forest hyperparameters
-    st.sidebar.subheader("Hyperparameters of Random Forest ")
-    n_estimators = st.sidebar.slider("Number of estimators", min_value=10, max_value=200, step=20, value=100)
-    max_depth = st.sidebar.slider("Maximum depth", min_value=1, max_value=20, value=5)
-    random_state = st.sidebar.slider("Random state ", min_value=0, max_value=200, value=42)
-    criterion = st.sidebar.selectbox("Criterion", options=["gini", "entropy"], index=0)
-    max_features = st.sidebar.selectbox("Max_features", options=["sqrt", "log2"])
+    st.sidebar.subheader("**Hyperparameters of Random Forest**")
+    n_estimators = st.sidebar.slider("**Number of estimators**", min_value=10, max_value=200, step=20, value=100)
+    max_depth = st.sidebar.slider("**Maximum depth**", min_value=1, max_value=20, value=5)
+    random_state = st.sidebar.slider("**Random state**", min_value=0, max_value=200, value=42)
+    criterion = st.sidebar.selectbox("**Criterion**", options=["gini", "entropy"], index=1)
+    max_features = st.sidebar.selectbox("**Max_features**", options=["sqrt", "log2"])
 
     RF = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth,criterion=criterion,max_features=max_features,random_state=42, n_jobs=-1)
 
