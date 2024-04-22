@@ -59,7 +59,7 @@ def main():
         st.sidebar.subheader('Model Evaluation')
         st.sidebar.write('Mean Squared Error:', mse)
         st.sidebar.write('R^2 Score:', r2)
-        st.sidebar.write('Adjusted R^2 Score:',adjusted_r2)
+        st.sidebar.write('Adjusted R-Square Score:',adjusted_r2)
 
         
 
